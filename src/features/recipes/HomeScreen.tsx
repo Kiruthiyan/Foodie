@@ -30,7 +30,7 @@ import { LoadingState, ErrorState, EmptyState } from '../../components/States';
 import { RootStackParamList, MainTabParamList } from '../../navigation/types';
 import { colors } from '../../theme/colors';
 import { typography } from '../../theme/typography';
-import { spacing, layout } from '../../theme/spacing';
+import { spacing } from '../../theme/spacing';
 
 type HomeScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<MainTabParamList, 'HomeTab'>,
@@ -114,7 +114,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
-      {/* Foodie Header */}
+      {/* Modern Header */}
       <FoodieHeader
         showProfileAvatar={true}
         avatarUrl={user?.image}
@@ -124,7 +124,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         title={`Hello, ${userName} 👋`}
       />
 
-      {/* Quick Search Entry */}
+      {/* Modern Search Prompt Bar */}
       <TouchableOpacity
         style={styles.searchPromptButton}
         onPress={() => navigation.navigate('SearchTab')}
@@ -133,8 +133,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         accessibilityLabel="Open Smart Search"
       >
         <Feather name="search" size={18} color={colors.textMuted} style={{ marginRight: 10 }} />
-        <Text style={styles.searchPromptText}>Search by recipe name or category...</Text>
+        <Text style={styles.searchPromptText}>Search recipes, ingredients...</Text>
         <View style={styles.searchBadge}>
+          <Feather name="sliders" size={12} color={colors.primary} style={{ marginRight: 4 }} />
           <Text style={styles.searchBadgeText}>Smart</Text>
         </View>
       </TouchableOpacity>
@@ -206,12 +207,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: spacing.xl,
     marginVertical: spacing.xs,
-    paddingHorizontal: spacing.md,
-    minHeight: layout.minTouchTarget,
+    paddingHorizontal: spacing.lg,
+    minHeight: 48,
     backgroundColor: colors.surface,
-    borderWidth: 1.5,
+    borderWidth: 1,
     borderColor: colors.surfaceBorder,
-    borderRadius: layout.borderRadiusMd,
+    borderRadius: 14,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.03,
+    shadowRadius: 5,
+    elevation: 1,
   },
   searchPromptText: {
     flex: 1,
@@ -219,14 +225,17 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
   },
   searchBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: colors.primaryLight,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: 3,
-    borderRadius: layout.borderRadiusSm,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 8,
   },
   searchBadgeText: {
     ...typography.captionBold,
     color: colors.primary,
+    fontSize: 11,
   },
   contentArea: {
     flex: 1,

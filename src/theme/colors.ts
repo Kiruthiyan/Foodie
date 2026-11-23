@@ -1,49 +1,56 @@
 export const colors = {
-  // Backgrounds
-  background: '#FFFDF9', // Warm cream background
-  backgroundSecondary: '#F9F5EC',
+  // Backgrounds - Warm modern cream & layered surfaces
+  background: '#FAF7F2', // Luxurious warm cream
+  backgroundSecondary: '#F3EFE6',
   surface: '#FFFFFF',
-  surfaceSubtle: '#FCFAF6',
-  surfaceBorder: '#EFE7DA',
+  surfaceSubtle: '#FCFBF9',
+  surfaceElevated: '#FFFFFF',
+  surfaceBorder: '#EFEAE1',
 
-  // Primary Action
-  primary: '#E53935', // Tomato red
-  primaryHover: '#D32F2F',
-  primaryLight: '#FFEBEE',
-  primaryBorder: '#FFCDD2',
+  // Primary Action - Vibrant Tomato Red
+  primary: '#E63946', // Vibrant, appetizing tomato coral-red
+  primaryHover: '#D62839',
+  primaryLight: '#FEECEE',
+  primaryBorder: '#FBC4C9',
+  primaryGradientStart: '#FF5E62',
+  primaryGradientEnd: '#E63946',
 
-  // Accent & Tags
-  accentGreen: '#2E7D32', // Basil green for tags & badges
-  accentGreenLight: '#E8F5E9',
-  accentGreenBorder: '#C8E6C9',
+  // Accent & Tags - Fresh Basil Green
+  accentGreen: '#10B981', // Modern emerald/basil green
+  accentGreenLight: '#ECFDF5',
+  accentGreenBorder: '#A7F3D0',
+  accentGreenDark: '#047857',
 
-  // Supporting Highlights
-  accentAmber: '#D97706',
+  // Warm Amber & Accents
+  accentAmber: '#F59E0B',
   accentAmberLight: '#FEF3C7',
+  accentAmberBorder: '#FDE68A',
 
-  // Text
-  textPrimary: '#1F2937', // Deep charcoal
-  textSecondary: '#4B5563', // Medium slate
-  textMuted: '#9CA3AF',
+  // Neutral Text Scale
+  textPrimary: '#111827', // Crisp, rich dark slate
+  textSecondary: '#4B5563', // Slate body text
+  textMuted: '#9CA3AF', // Muted placeholders & captions
   textInverse: '#FFFFFF',
-  textLink: '#E53935',
+  textLink: '#E63946',
 
-  // Status & Feedback
-  success: '#16A34A',
+  // Status Colors
+  success: '#10B981',
+  successLight: '#ECFDF5',
   warning: '#F59E0B',
-  error: '#DC2626',
+  warningLight: '#FFFBEB',
+  error: '#EF4444',
   errorLight: '#FEF2F2',
-  errorBorder: '#FCA5A5',
+  errorBorder: '#FECACA',
 
   // Borders & Dividers
   border: '#E5E7EB',
-  borderStrong: '#D1D5DB',
+  borderLight: '#F3F4F6',
 
   // Bottom Tab Navigation
   tabBarBackground: '#FFFFFF',
-  tabBarBorder: '#EFE7DA',
-  tabActive: '#E53935',
-  tabInactive: '#6B7280',
+  tabBarBorder: '#F0ECE4',
+  tabActive: '#E63946',
+  tabInactive: '#9CA3AF',
 };
 
 export type Colors = typeof colors;

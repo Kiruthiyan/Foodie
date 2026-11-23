@@ -14,7 +14,7 @@ export const FoodieLogo: React.FC<FoodieLogoProps> = ({ size = 'normal' }) => {
   return (
     <View style={styles.logoRow}>
       <View style={[styles.iconBadge, isLarge && styles.iconBadgeLarge]}>
-        <Feather name="disc" size={isLarge ? 20 : 16} color={colors.surface} />
+        <Feather name="disc" size={isLarge ? 20 : 15} color={colors.surface} />
       </View>
       <Text style={[styles.logoText, isLarge && styles.logoTextLarge]}>
         Foodie<Text style={styles.logoDot}>.</Text>
@@ -48,7 +48,7 @@ export const FoodieHeader: React.FC<FoodieHeaderProps> = ({
           <TouchableOpacity
             style={styles.avatarButton}
             onPress={onProfilePress}
-            activeOpacity={0.7}
+            activeOpacity={0.8}
             accessibilityRole="button"
             accessibilityLabel="Open user profile"
             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
@@ -92,29 +92,35 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   iconBadge: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
     backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: spacing.sm,
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 2,
   },
   iconBadgeLarge: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     marginRight: spacing.md,
   },
   logoText: {
     ...typography.h3,
+    fontSize: 20,
     color: colors.textPrimary,
     fontWeight: '800',
     letterSpacing: -0.5,
   },
   logoTextLarge: {
-    fontSize: 26,
-    lineHeight: 32,
+    fontSize: 28,
+    lineHeight: 34,
   },
   logoDot: {
     color: colors.primary,
@@ -126,16 +132,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   avatarImage: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     borderWidth: 2,
     borderColor: colors.surfaceBorder,
   },
   avatarFallback: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     backgroundColor: colors.primaryLight,
     borderWidth: 1.5,
     borderColor: colors.primaryBorder,
@@ -145,19 +151,25 @@ const styles = StyleSheet.create({
   avatarInitial: {
     ...typography.captionBold,
     color: colors.primary,
+    fontSize: 14,
   },
   titleSection: {
-    marginTop: spacing.sm,
+    marginTop: spacing.md,
   },
   headerSubtitle: {
     ...typography.captionBold,
     color: colors.textMuted,
     textTransform: 'uppercase',
-    letterSpacing: 0.8,
+    letterSpacing: 1,
+    fontSize: 11,
   },
   headerTitle: {
     ...typography.h2,
+    fontSize: 26,
+    lineHeight: 32,
     color: colors.textPrimary,
+    fontWeight: '800',
     marginTop: 2,
+    letterSpacing: -0.4,
   },
 });

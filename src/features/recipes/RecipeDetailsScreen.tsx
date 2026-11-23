@@ -63,17 +63,17 @@ export const RecipeDetailsScreen: React.FC<RecipeDetailsProps> = ({ route, navig
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
-      {/* Header with back arrow and "Recipe" on the left */}
+      {/* Header with back pill and "Recipe" title */}
       <View style={styles.header}>
         <TouchableOpacity
-          style={styles.backButton}
+          style={styles.backPill}
           onPress={() => navigation.goBack()}
-          activeOpacity={0.7}
+          activeOpacity={0.75}
           accessibilityRole="button"
           accessibilityLabel="Back to recipes"
           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
         >
-          <Feather name="arrow-left" size={22} color={colors.textPrimary} />
+          <Feather name="arrow-left" size={18} color={colors.textPrimary} />
           <Text style={styles.headerTitle}>Recipe</Text>
         </TouchableOpacity>
       </View>
@@ -92,7 +92,7 @@ export const RecipeDetailsScreen: React.FC<RecipeDetailsProps> = ({ route, navig
         />
       ) : (
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-          {/* Photo with Favourite Heart Overlay */}
+          {/* Photo Hero with Floating Favourite Button */}
           <View style={styles.imageContainer}>
             <Image source={{ uri: recipe.thumbnail }} style={styles.heroImage} resizeMode="cover" />
             <TouchableOpacity
@@ -105,13 +105,13 @@ export const RecipeDetailsScreen: React.FC<RecipeDetailsProps> = ({ route, navig
             >
               <Feather
                 name="heart"
-                size={22}
+                size={20}
                 color={isFavourite ? colors.primary : colors.textPrimary}
               />
             </TouchableOpacity>
           </View>
 
-          {/* Title & Metadata */}
+          {/* Details Body */}
           <View style={styles.body}>
             <View style={styles.tagRow}>
               <View style={styles.categoryBadge}>
@@ -138,7 +138,7 @@ export const RecipeDetailsScreen: React.FC<RecipeDetailsProps> = ({ route, navig
             {/* Ingredients Section */}
             <View style={styles.section}>
               <View style={styles.sectionHeaderRow}>
-                <Feather name="shopping-bag" size={20} color={colors.primary} style={{ marginRight: 8 }} />
+                <Feather name="shopping-bag" size={18} color={colors.primary} style={{ marginRight: 8 }} />
                 <Text style={styles.sectionTitle}>
                   Ingredients ({recipe.ingredients.length})
                 </Text>
@@ -163,26 +163,26 @@ export const RecipeDetailsScreen: React.FC<RecipeDetailsProps> = ({ route, navig
             {/* Cooking Instructions */}
             <View style={styles.section}>
               <View style={styles.sectionHeaderRow}>
-                <Feather name="book-open" size={20} color={colors.primary} style={{ marginRight: 8 }} />
-                <Text style={styles.sectionTitle}>Instructions</Text>
+                <Feather name="book-open" size={18} color={colors.primary} style={{ marginRight: 8 }} />
+                <Text style={styles.sectionTitle}>Step-by-Step Instructions</Text>
               </View>
               <View style={styles.instructionsCard}>
                 <Text style={styles.instructionsText}>{recipe.instructions}</Text>
               </View>
             </View>
 
-            {/* Video or Source Links */}
+            {/* Media / Source Actions */}
             {(recipe.youtubeUrl || recipe.sourceUrl) && (
               <View style={styles.linksRow}>
                 {recipe.youtubeUrl && (
                   <TouchableOpacity
                     style={[styles.linkButton, styles.youtubeButton]}
                     onPress={() => handleOpenLink(recipe.youtubeUrl)}
-                    activeOpacity={0.8}
+                    activeOpacity={0.85}
                     accessibilityRole="button"
                     accessibilityLabel="Watch video tutorial on YouTube"
                   >
-                    <Feather name="video" size={18} color={colors.textInverse} style={{ marginRight: 8 }} />
+                    <Feather name="video" size={16} color={colors.textInverse} style={{ marginRight: 8 }} />
                     <Text style={styles.linkButtonText}>Watch Tutorial</Text>
                   </TouchableOpacity>
                 )}
@@ -190,11 +190,11 @@ export const RecipeDetailsScreen: React.FC<RecipeDetailsProps> = ({ route, navig
                   <TouchableOpacity
                     style={[styles.linkButton, styles.sourceButton]}
                     onPress={() => handleOpenLink(recipe.sourceUrl)}
-                    activeOpacity={0.8}
+                    activeOpacity={0.85}
                     accessibilityRole="button"
                     accessibilityLabel="View original recipe source"
                   >
-                    <Feather name="external-link" size={18} color={colors.textPrimary} style={{ marginRight: 8 }} />
+                    <Feather name="external-link" size={16} color={colors.textPrimary} style={{ marginRight: 8 }} />
                     <Text style={[styles.linkButtonText, { color: colors.textPrimary }]}>Source</Text>
                   </TouchableOpacity>
                 )}
@@ -216,26 +216,37 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: spacing.xl,
-    paddingVertical: spacing.md,
+    paddingVertical: spacing.sm,
     backgroundColor: colors.background,
     minHeight: layout.headerHeight,
   },
-  backButton: {
+  backPill: {
     flexDirection: 'row',
     alignItems: 'center',
-    minHeight: layout.minTouchTarget,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.surfaceBorder,
+    borderRadius: 20,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 3,
+    elevation: 1,
   },
   headerTitle: {
-    ...typography.h3,
+    ...typography.bodyBold,
     color: colors.textPrimary,
-    marginLeft: spacing.sm,
+    marginLeft: 6,
+    fontSize: 14,
   },
   scrollContent: {
     paddingBottom: spacing.xxxl,
   },
   imageContainer: {
     width: '100%',
-    height: 280,
+    height: 290,
     position: 'relative',
     backgroundColor: colors.backgroundSecondary,
   },
@@ -247,16 +258,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: spacing.lg,
     right: spacing.lg,
-    width: layout.minTouchTarget,
-    height: layout.minTouchTarget,
-    borderRadius: layout.minTouchTarget / 2,
+    width: 46,
+    height: 46,
+    borderRadius: 23,
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.18,
-    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.16,
+    shadowRadius: 8,
     elevation: 4,
   },
   heartButtonActive: {
@@ -273,30 +284,36 @@ const styles = StyleSheet.create({
   },
   categoryBadge: {
     backgroundColor: colors.accentGreenLight,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: 12,
     paddingVertical: 4,
-    borderRadius: layout.borderRadiusSm,
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: colors.accentGreenBorder,
   },
   categoryBadgeText: {
     ...typography.tag,
-    color: colors.accentGreen,
+    color: colors.accentGreenDark,
+    fontSize: 11,
+    fontWeight: '700',
   },
   areaBadge: {
     backgroundColor: colors.backgroundSecondary,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: 12,
     paddingVertical: 4,
-    borderRadius: layout.borderRadiusSm,
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: colors.surfaceBorder,
   },
   areaBadgeText: {
     ...typography.tag,
     color: colors.textSecondary,
+    fontSize: 11,
+    fontWeight: '600',
   },
   recipeTitle: {
     ...typography.h1,
+    fontSize: 26,
+    lineHeight: 32,
     color: colors.textPrimary,
     marginTop: spacing.xs,
     marginBottom: spacing.md,
@@ -304,15 +321,15 @@ const styles = StyleSheet.create({
   tagsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: spacing.xs,
+    gap: 6,
     marginBottom: spacing.lg,
   },
   tagPill: {
-    backgroundColor: colors.surfaceSubtle,
+    backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.surfaceBorder,
     borderRadius: layout.borderRadiusPill,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: 12,
     paddingVertical: 4,
   },
   tagPillText: {
@@ -329,15 +346,21 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     ...typography.h3,
+    fontSize: 18,
     color: colors.textPrimary,
   },
   ingredientsCard: {
     backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.surfaceBorder,
-    borderRadius: layout.borderRadiusLg,
+    borderRadius: 18,
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.sm,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.03,
+    shadowRadius: 6,
+    elevation: 1,
   },
   ingredientRow: {
     flexDirection: 'row',
@@ -362,15 +385,20 @@ const styles = StyleSheet.create({
   },
   ingredientMeasure: {
     ...typography.bodyBold,
-    color: colors.accentGreen,
+    color: colors.accentGreenDark,
     marginLeft: spacing.sm,
   },
   instructionsCard: {
     backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.surfaceBorder,
-    borderRadius: layout.borderRadiusLg,
+    borderRadius: 18,
     padding: spacing.lg,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.03,
+    shadowRadius: 6,
+    elevation: 1,
   },
   instructionsText: {
     ...typography.bodyLarge,
@@ -385,8 +413,8 @@ const styles = StyleSheet.create({
   linkButton: {
     flex: 1,
     flexDirection: 'row',
-    minHeight: layout.minTouchTarget,
-    borderRadius: layout.borderRadiusMd,
+    minHeight: 48,
+    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: spacing.md,
@@ -402,5 +430,6 @@ const styles = StyleSheet.create({
   linkButtonText: {
     ...typography.button,
     color: colors.textInverse,
+    fontSize: 14,
   },
 });

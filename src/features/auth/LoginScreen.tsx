@@ -51,10 +51,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     await dispatch(loginUser({ username, password }));
   };
 
-  const handleFillDemo = (demoUser: string, demoPass: string) => {
-    setUsername(demoUser);
-    setPassword(demoPass);
+  const handleQuickDemo = () => {
+    setUsername('emilys');
+    setPassword('emilyspass');
     dispatch(clearAuthError());
+    dispatch(loginUser({ username: 'emilys', password: 'emilyspass' }));
   };
 
   return (
@@ -66,77 +67,75 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
         >
-          {/* Branded Foodie Header */}
-          <View style={styles.header}>
-            <FoodieLogo size="large" />
-          </View>
-
-          {/* Title Section */}
-          <View style={styles.welcomeSection}>
-            <Text style={styles.title}>Welcome back</Text>
-            <Text style={styles.subtitle}>
-              Sign in to explore recipes and keep your culinary favourites synced.
+          {/* Top Brand Hero */}
+          <View style={styles.heroSection}>
+            <View style={styles.logoBadgeContainer}>
+              <FoodieLogo size="large" />
+            </View>
+            <Text style={styles.welcomeTitle}>Welcome back</Text>
+            <Text style={styles.welcomeSubtitle}>
+              Sign in to discover chef recipes, smart flavors, and your saved collection.
             </Text>
           </View>
 
-          {/* Global API Error */}
-          {error && (
-            <View style={styles.globalErrorBox}>
-              <Feather name="alert-circle" size={18} color={colors.error} style={{ marginRight: 8 }} />
-              <Text style={styles.globalErrorText}>{error}</Text>
-            </View>
-          )}
+          {/* Form Card */}
+          <View style={styles.card}>
+            {error && (
+              <View style={styles.errorBanner}>
+                <Feather name="alert-circle" size={16} color={colors.error} style={{ marginRight: 8 }} />
+                <Text style={styles.errorBannerText}>{error}</Text>
+              </View>
+            )}
 
-          {/* Form Fields */}
-          <View style={styles.form}>
-            {/* Username */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Username</Text>
-              <View style={[styles.inputWrapper, !!usernameError && styles.inputWrapperError]}>
-                <Feather name="user" size={20} color={colors.textMuted} style={styles.fieldIcon} />
+            {/* Username Input */}
+            <View style={styles.fieldGroup}>
+              <Text style={styles.fieldLabel}>Username</Text>
+              <View style={[styles.inputBox, !!usernameError && styles.inputBoxError]}>
+                <Feather name="user" size={18} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
-                  style={styles.input}
+                  style={styles.textInput}
                   value={username}
                   onChangeText={(text) => {
                     setUsername(text);
                     if (error) dispatch(clearAuthError());
                   }}
                   onBlur={() => setTouched((prev) => ({ ...prev, username: true }))}
-                  placeholder="Enter your username"
+                  placeholder="Enter username"
                   placeholderTextColor={colors.textMuted}
                   autoCapitalize="none"
                   autoCorrect={false}
-                  accessibilityLabel="Username input"
+                  accessibilityLabel="Username"
                 />
               </View>
               {usernameError ? <Text style={styles.errorText}>{usernameError}</Text> : null}
             </View>
 
-            {/* Password */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Password</Text>
-              <View style={[styles.inputWrapper, !!passwordError && styles.inputWrapperError]}>
-                <Feather name="lock" size={20} color={colors.textMuted} style={styles.fieldIcon} />
+            {/* Password Input */}
+            <View style={styles.fieldGroup}>
+              <Text style={styles.fieldLabel}>Password</Text>
+              <View style={[styles.inputBox, !!passwordError && styles.inputBoxError]}>
+                <Feather name="lock" size={18} color={colors.textMuted} style={styles.inputIcon} />
                 <TextInput
-                  style={styles.input}
+                  style={styles.textInput}
                   value={password}
                   onChangeText={(text) => {
                     setPassword(text);
                     if (error) dispatch(clearAuthError());
                   }}
                   onBlur={() => setTouched((prev) => ({ ...prev, password: true }))}
-                  placeholder="Enter your password"
+                  placeholder="Enter password"
                   placeholderTextColor={colors.textMuted}
                   secureTextEntry={!showPassword}
-                  accessibilityLabel="Password input"
+                  accessibilityLabel="Password"
                 />
                 <TouchableOpacity
-                  style={styles.eyeButton}
+                  style={styles.eyeToggle}
                   onPress={() => setShowPassword((prev) => !prev)}
                   accessibilityRole="button"
                   accessibilityLabel={showPassword ? 'Hide password' : 'Show password'}
-                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                 >
                   <Feather
                     name={showPassword ? 'eye-off' : 'eye'}
@@ -148,63 +147,51 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
               {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
             </View>
 
-            {/* Sign In Button */}
+            {/* Main Sign In Button */}
             <TouchableOpacity
-              style={styles.submitButton}
+              style={styles.signInButton}
               onPress={handleLogin}
               disabled={isLoading}
-              activeOpacity={0.85}
+              activeOpacity={0.88}
               accessibilityRole="button"
-              accessibilityLabel="Sign in button"
+              accessibilityLabel="Sign In"
             >
               {isLoading ? (
-                <ActivityIndicator color={colors.textInverse} />
+                <ActivityIndicator color={colors.textInverse} size="small" />
               ) : (
-                <Text style={styles.submitButtonText}>Sign In</Text>
+                <View style={styles.signInButtonContent}>
+                  <Text style={styles.signInButtonText}>Sign In</Text>
+                  <Feather name="arrow-right" size={18} color={colors.textInverse} style={{ marginLeft: 8 }} />
+                </View>
               )}
             </TouchableOpacity>
 
-            {/* Reviewer / Demo Credentials Helper */}
-            <View style={styles.demoBox}>
-              <View style={styles.demoHeaderRow}>
-                <Feather name="info" size={16} color={colors.accentGreen} style={{ marginRight: 6 }} />
-                <Text style={styles.demoTitle}>Reviewer Demo Accounts (DummyJSON)</Text>
-              </View>
-              <Text style={styles.demoHint}>
-                DummyJSON authentication accepts verified accounts:
-              </Text>
-              <View style={styles.demoChipsRow}>
-                <TouchableOpacity
-                  style={styles.demoChip}
-                  onPress={() => handleFillDemo('emilys', 'emilyspass')}
-                  accessibilityRole="button"
-                  accessibilityLabel="Use Emily Johnson demo account"
-                >
-                  <Text style={styles.demoChipText}>emilys / emilyspass</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.demoChip}
-                  onPress={() => handleFillDemo('michaelw', 'michaelwpass')}
-                  accessibilityRole="button"
-                  accessibilityLabel="Use Michael Williams demo account"
-                >
-                  <Text style={styles.demoChipText}>michaelw / michaelwpass</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+            {/* Clean 1-Tap Demo Access */}
+            <TouchableOpacity
+              style={styles.quickDemoPill}
+              onPress={handleQuickDemo}
+              disabled={isLoading}
+              activeOpacity={0.8}
+              accessibilityRole="button"
+              accessibilityLabel="Instant Demo Login as Emily"
+            >
+              <View style={styles.demoPillDot} />
+              <Text style={styles.quickDemoText}>Instant Demo Access (Emily Johnson)</Text>
+              <Feather name="zap" size={14} color={colors.accentGreen} style={{ marginLeft: 6 }} />
+            </TouchableOpacity>
+          </View>
 
-            {/* Registration Link */}
-            <View style={styles.registerRow}>
-              <Text style={styles.registerPrompt}>{"Don't have an account? "}</Text>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Register')}
-                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                accessibilityRole="button"
-                accessibilityLabel="Navigate to registration"
-              >
-                <Text style={styles.registerLink}>Register</Text>
-              </TouchableOpacity>
-            </View>
+          {/* Bottom Navigation Link */}
+          <View style={styles.footerRow}>
+            <Text style={styles.footerText}>New to Foodie? </Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Register')}
+              accessibilityRole="button"
+              accessibilityLabel="Create account"
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            >
+              <Text style={styles.footerLink}>Create an account</Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -222,26 +209,43 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: spacing.xl,
-    paddingTop: spacing.lg,
+    paddingTop: spacing.xxl,
     paddingBottom: spacing.xxxl,
   },
-  header: {
+  heroSection: {
     marginBottom: spacing.xxl,
+    alignItems: 'flex-start',
   },
-  welcomeSection: {
-    marginBottom: spacing.xl,
+  logoBadgeContainer: {
+    marginBottom: spacing.lg,
   },
-  title: {
+  welcomeTitle: {
     ...typography.h1,
+    fontSize: 32,
+    lineHeight: 38,
     color: colors.textPrimary,
+    letterSpacing: -0.6,
     marginBottom: spacing.xs,
   },
-  subtitle: {
-    ...typography.body,
+  welcomeSubtitle: {
+    ...typography.bodyLarge,
     color: colors.textSecondary,
-    lineHeight: 22,
+    lineHeight: 24,
   },
-  globalErrorBox: {
+  card: {
+    backgroundColor: colors.surface,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: colors.surfaceBorder,
+    padding: spacing.xl,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.04,
+    shadowRadius: 12,
+    elevation: 3,
+    gap: spacing.lg,
+  },
+  errorBanner: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.errorLight,
@@ -249,47 +253,46 @@ const styles = StyleSheet.create({
     borderColor: colors.errorBorder,
     borderRadius: layout.borderRadiusMd,
     padding: spacing.md,
-    marginBottom: spacing.lg,
   },
-  globalErrorText: {
+  errorBannerText: {
     ...typography.body,
     color: colors.error,
     flex: 1,
   },
-  form: {
-    gap: spacing.lg,
+  fieldGroup: {
+    gap: 6,
   },
-  inputGroup: {
-    gap: spacing.xs,
-  },
-  label: {
+  fieldLabel: {
     ...typography.captionBold,
     color: colors.textPrimary,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
-  inputWrapper: {
+  inputBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.surface,
+    backgroundColor: colors.surfaceSubtle,
     borderWidth: 1.5,
     borderColor: colors.surfaceBorder,
     borderRadius: layout.borderRadiusMd,
     minHeight: layout.minTouchTarget,
     paddingHorizontal: spacing.md,
   },
-  inputWrapperError: {
+  inputBoxError: {
     borderColor: colors.error,
+    backgroundColor: colors.errorLight,
   },
-  fieldIcon: {
+  inputIcon: {
     marginRight: spacing.sm,
   },
-  input: {
+  textInput: {
     flex: 1,
     ...typography.bodyLarge,
     color: colors.textPrimary,
     minHeight: layout.minTouchTarget,
     paddingVertical: spacing.sm,
   },
-  eyeButton: {
+  eyeToggle: {
     width: 36,
     height: 36,
     alignItems: 'center',
@@ -300,75 +303,64 @@ const styles = StyleSheet.create({
     color: colors.error,
     marginTop: 2,
   },
-  submitButton: {
-    minHeight: layout.minTouchTarget,
+  signInButton: {
+    minHeight: 52,
     borderRadius: layout.borderRadiusMd,
     backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: spacing.sm,
+    marginTop: spacing.xs,
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
-    elevation: 3,
+    shadowOpacity: 0.28,
+    shadowRadius: 10,
+    elevation: 4,
   },
-  submitButtonText: {
-    ...typography.button,
-    color: colors.textInverse,
-  },
-  demoBox: {
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.accentGreenBorder,
-    borderRadius: layout.borderRadiusMd,
-    padding: spacing.md,
-    marginTop: spacing.sm,
-  },
-  demoHeaderRow: {
+  signInButtonContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: spacing.xs,
+    justifyContent: 'center',
   },
-  demoTitle: {
-    ...typography.captionBold,
-    color: colors.accentGreen,
+  signInButtonText: {
+    ...typography.button,
+    color: colors.textInverse,
+    fontSize: 16,
+    fontWeight: '700',
   },
-  demoHint: {
-    ...typography.caption,
-    color: colors.textSecondary,
-    marginBottom: spacing.sm,
-  },
-  demoChipsRow: {
+  quickDemoPill: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: spacing.sm,
-  },
-  demoChip: {
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: colors.accentGreenLight,
     borderWidth: 1,
     borderColor: colors.accentGreenBorder,
-    borderRadius: layout.borderRadiusSm,
+    borderRadius: layout.borderRadiusPill,
+    paddingVertical: spacing.sm,
     paddingHorizontal: spacing.md,
-    minHeight: 36,
-    justifyContent: 'center',
-    alignItems: 'center',
+    minHeight: 40,
   },
-  demoChipText: {
+  demoPillDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: colors.accentGreen,
+    marginRight: 8,
+  },
+  quickDemoText: {
     ...typography.captionBold,
-    color: colors.accentGreen,
+    color: colors.accentGreenDark,
   },
-  registerRow: {
+  footerRow: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: spacing.md,
+    marginTop: spacing.xl,
   },
-  registerPrompt: {
+  footerText: {
     ...typography.body,
     color: colors.textSecondary,
   },
-  registerLink: {
+  footerLink: {
     ...typography.bodyBold,
     color: colors.primary,
   },

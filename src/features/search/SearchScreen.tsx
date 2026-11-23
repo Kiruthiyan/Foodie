@@ -43,13 +43,13 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
   const [rawSearchQuery, setRawSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
 
-  // Twist Requirement: Debounce search input so API call or filtering isn't executed on every keystroke
+  // Debounce search input (350ms) to ensure API call is not executed on every keystroke
   const debouncedQuery = useDebounce(rawSearchQuery, 350);
 
   // Categories
   const { data: categories = [] } = useGetCategoriesQuery();
 
-  // Search by name API query (runs with debounced query)
+  // Search by name API query
   const {
     data: searchResults = [],
     isLoading: isSearchLoading,
@@ -57,7 +57,7 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
     refetch: refetchSearch,
   } = useSearchRecipesByNameQuery(debouncedQuery);
 
-  // Category filter API query (when category is selected)
+  // Category filter API query
   const hasCategoryFilter = selectedCategory !== 'All';
   const {
     data: categoryResults = [],
@@ -68,9 +68,7 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
 
   // Combined smart filtering: Name query AND category filter applied together
   const filteredMeals = useMemo(() => {
-    // If user has a category filter selected
     if (hasCategoryFilter) {
-      // If user also typed a debounced search query, filter category items by query name
       if (debouncedQuery.trim().length > 0) {
         const queryLower = debouncedQuery.toLowerCase().trim();
         return categoryResults.filter((meal) =>
@@ -80,7 +78,6 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
       return categoryResults;
     }
 
-    // No category selected ("All"), return search results matching query
     return searchResults;
   }, [hasCategoryFilter, categoryResults, debouncedQuery, searchResults]);
 
@@ -111,18 +108,18 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
-      {/* Header */}
+      {/* Modern Header */}
       <FoodieHeader
-        subtitle="SMART SEARCH"
-        title="Find Delicious Recipes"
+        subtitle="DISCOVERY ENGINE"
+        title="Smart Search"
       />
 
-      {/* Debounced Search Field */}
+      {/* Modern Search Bar */}
       <SearchBar
         value={rawSearchQuery}
         onChangeText={setRawSearchQuery}
         onClear={() => setRawSearchQuery('')}
-        placeholder="Search by recipe name"
+        placeholder="Search by recipe name..."
       />
 
       {/* Category Chips with "All" and Selected Highlighting */}
@@ -132,10 +129,10 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
         onSelectCategory={(cat) => setSelectedCategory(cat)}
       />
 
-      {/* Results / Feedback */}
+      {/* Results Content Area */}
       <View style={styles.content}>
         {isLoading ? (
-          <LoadingState message="Searching recipes with smart filter..." />
+          <LoadingState message="Filtering culinary catalog..." />
         ) : isError ? (
           <ErrorState
             onRetry={() => {
@@ -145,14 +142,14 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
           />
         ) : filteredMeals.length === 0 ? (
           <EmptyState
-            icon="slash"
+            icon="search"
             title="No recipes found"
             message={
               rawSearchQuery.trim()
-                ? `No recipes matched "${rawSearchQuery}" in ${selectedCategory} category.`
+                ? `No dishes matched "${rawSearchQuery}" in ${selectedCategory} category.`
                 : `No recipes found in ${selectedCategory} category.`
             }
-            actionLabel="Clear filters"
+            actionLabel="Reset filters"
             onAction={handleClearFilters}
           />
         ) : (

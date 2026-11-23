@@ -41,11 +41,15 @@ export const FavouritesScreen: React.FC<FavouritesScreenProps> = ({ navigation }
     }
   };
 
+  const countSubtitle = favourites.length === 1
+    ? '1 SAVED RECIPE'
+    : `${favourites.length} SAVED RECIPES`;
+
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
-      {/* Foodie Header */}
+      {/* Modern Header */}
       <FoodieHeader
-        subtitle="MY COLLECTION"
+        subtitle={countSubtitle}
         title="Favourites"
       />
 
@@ -54,7 +58,7 @@ export const FavouritesScreen: React.FC<FavouritesScreenProps> = ({ navigation }
           <EmptyState
             icon="heart"
             title="No favourites yet"
-            message="Explore appetizing dishes and tap the heart icon to save recipes here."
+            message="Discover delicious meals and tap the heart icon to save recipes to your collection."
             actionLabel="Browse recipes"
             onAction={() => navigation.navigate('HomeTab')}
           />
@@ -68,7 +72,7 @@ export const FavouritesScreen: React.FC<FavouritesScreenProps> = ({ navigation }
               <TouchableOpacity
                 style={styles.itemCard}
                 onPress={() => navigation.navigate('RecipeDetails', { recipeId: item.idMeal })}
-                activeOpacity={0.85}
+                activeOpacity={0.88}
                 accessibilityRole="button"
                 accessibilityLabel={`Favourite recipe: ${item.strMeal}`}
               >
@@ -92,7 +96,7 @@ export const FavouritesScreen: React.FC<FavouritesScreenProps> = ({ navigation }
                   accessibilityLabel={`Remove ${item.strMeal} from favourites`}
                   hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
                 >
-                  <Feather name="trash-2" size={20} color={colors.primary} />
+                  <Feather name="trash-2" size={18} color={colors.error} />
                 </TouchableOpacity>
               </TouchableOpacity>
             )}
@@ -121,20 +125,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.surface,
-    borderRadius: layout.borderRadiusLg,
+    borderRadius: 18,
     borderWidth: 1,
     borderColor: colors.surfaceBorder,
     padding: spacing.md,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.04,
-    shadowRadius: 6,
+    shadowRadius: 8,
     elevation: 2,
   },
   thumbnail: {
-    width: 80,
-    height: 80,
-    borderRadius: layout.borderRadiusMd,
+    width: 82,
+    height: 82,
+    borderRadius: 14,
     backgroundColor: colors.backgroundSecondary,
   },
   itemInfo: {
@@ -145,19 +149,23 @@ const styles = StyleSheet.create({
   categoryBadge: {
     alignSelf: 'flex-start',
     backgroundColor: colors.accentGreenLight,
-    paddingHorizontal: spacing.sm,
+    paddingHorizontal: 8,
     paddingVertical: 2,
-    borderRadius: layout.borderRadiusSm,
+    borderRadius: 6,
     borderWidth: 1,
     borderColor: colors.accentGreenBorder,
     marginBottom: 4,
   },
   categoryBadgeText: {
     ...typography.tag,
-    color: colors.accentGreen,
+    color: colors.accentGreenDark,
+    fontSize: 10,
+    fontWeight: '700',
   },
   itemTitle: {
     ...typography.bodyBold,
+    fontSize: 15,
+    lineHeight: 20,
     color: colors.textPrimary,
   },
   itemArea: {
@@ -166,10 +174,10 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   removeButton: {
-    width: layout.minTouchTarget,
-    height: layout.minTouchTarget,
-    borderRadius: layout.minTouchTarget / 2,
-    backgroundColor: colors.primaryLight,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: colors.errorLight,
     alignItems: 'center',
     justifyContent: 'center',
   },

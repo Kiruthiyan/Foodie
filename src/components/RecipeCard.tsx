@@ -29,23 +29,26 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
     <TouchableOpacity
       style={styles.cardContainer}
       onPress={onPress}
-      activeOpacity={0.88}
+      activeOpacity={0.9}
       accessibilityRole="button"
       accessibilityLabel={`Recipe: ${title}`}
     >
       <View style={styles.imageWrapper}>
         <Image source={{ uri: thumbnail }} style={styles.image} resizeMode="cover" />
+        <View style={styles.imageGradientOverlay} />
+        
+        {/* Floating Heart Button */}
         <TouchableOpacity
           style={[styles.heartButton, isFavourite && styles.heartButtonActive]}
           onPress={onToggleFavourite}
-          activeOpacity={0.7}
+          activeOpacity={0.8}
           accessibilityRole="button"
           accessibilityLabel={isFavourite ? 'Remove from favourites' : 'Save to favourites'}
           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
         >
           <Feather
             name="heart"
-            size={20}
+            size={18}
             color={isFavourite ? colors.primary : colors.textPrimary}
           />
         </TouchableOpacity>
@@ -60,7 +63,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
           ) : null}
           {area ? (
             <View style={styles.areaTag}>
-              <Text style={styles.areaTagText}>{area}</Text>
+              <Text style={styles.areaTagText}>{area} Cuisine</Text>
             </View>
           ) : null}
         </View>
@@ -76,20 +79,20 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
 const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: colors.surface,
-    borderRadius: layout.borderRadiusLg,
+    borderRadius: 20,
     borderWidth: 1,
     borderColor: colors.surfaceBorder,
     marginBottom: spacing.lg,
     overflow: 'hidden',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.05,
-    shadowRadius: 8,
+    shadowRadius: 10,
     elevation: 2,
   },
   imageWrapper: {
     width: '100%',
-    height: 190,
+    height: 195,
     position: 'relative',
     backgroundColor: colors.backgroundSecondary,
   },
@@ -97,20 +100,24 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  imageGradientOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.02)',
+  },
   heartButton: {
     position: 'absolute',
     top: spacing.md,
     right: spacing.md,
-    width: layout.minTouchTarget,
-    height: layout.minTouchTarget,
-    borderRadius: layout.minTouchTarget / 2,
-    backgroundColor: 'rgba(255, 255, 255, 0.92)',
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
+    shadowOpacity: 0.12,
+    shadowRadius: 6,
     elevation: 3,
   },
   heartButtonActive: {
@@ -128,31 +135,38 @@ const styles = StyleSheet.create({
   },
   tag: {
     backgroundColor: colors.accentGreenLight,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: 3,
-    borderRadius: layout.borderRadiusSm,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: colors.accentGreenBorder,
   },
   tagText: {
     ...typography.tag,
-    color: colors.accentGreen,
+    color: colors.accentGreenDark,
+    fontWeight: '700',
+    fontSize: 11,
   },
   areaTag: {
     backgroundColor: colors.backgroundSecondary,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: 3,
-    borderRadius: layout.borderRadiusSm,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: colors.surfaceBorder,
   },
   areaTagText: {
     ...typography.tag,
     color: colors.textSecondary,
+    fontWeight: '600',
+    fontSize: 11,
   },
   title: {
     ...typography.h3,
+    fontSize: 17,
+    lineHeight: 22,
     color: colors.textPrimary,
+    fontWeight: '700',
     marginTop: 2,
   },
 });
