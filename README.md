@@ -2,6 +2,7 @@
 
 > **IN3210 Mobile Applications Development · Assignment 2: Build Your Own Discovery App**  
 > **Student Index**: `234110`  
+> **Repository**: [https://github.com/Kiruthiyan/Foodie](https://github.com/Kiruthiyan/Foodie)  
 > **Domain**: Food & Recipes (TheMealDB API)  
 > **Assigned Twist**: Smart Search (Debounced query + Category chips + Synchronized multi-criteria filtering)  
 > **Deadline**: 13 December 2026 at 11:59 PM Sri Lanka time  
