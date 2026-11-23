@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Foodie",
+    "slug": "foodie",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": false,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFDF9"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kiruthiyan.foodie"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFDF9"
+      },
+      "package": "com.kiruthiyan.foodie"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
